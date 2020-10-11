@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/l222p/trailers-api.svg?branch=main)](https://travis-ci.org/l222p/trailers-api)
+
 # trailers-api
 REST API for providing clients with trailer URLs. The API takes a movie resource link (e.g. https://content.viaplay.se/pc-se/film/arrival-2016) as input and based on that return the URL to the trailer for that movie. 
 
