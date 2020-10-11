@@ -42,5 +42,6 @@
   "homepage": "https://github.com/l222p/trailers-api#readme",
   "jest": {
     "preset": "ts-jest"
-  }
+  },
+  "testEnvironment": "node"
 }
