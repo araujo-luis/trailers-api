@@ -25,9 +25,3 @@ test('Get JojoRabbit IMDB Id', async () => {
     expect(imdb).toEqual('tt2584384');
 
 });
-
-test('Get JojoRabbit IMDB Id', async () => {
-    const imdb = await getImdbId(jojoRabbit + '123');
-    expect(imdb).toThrow('Error: Request failed with status code 404');
-
-});

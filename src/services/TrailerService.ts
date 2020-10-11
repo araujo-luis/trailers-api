@@ -1,15 +1,8 @@
-import dotenv from 'dotenv';
 import { Trailer } from '@App/models/Trailer';
 import axios from 'axios';
-import { LinkProvider } from '../utils/constants';
+import { BearerAuthorization, LinkProvider, THE_MOVIE_API_URL } from '../utils/constants';
 import { NotFound } from '../utils/ErrorHandler';
 
-dotenv.config()
-const { THE_MOVIE_API_TOKEN, THE_MOVIE_API_URL } = process.env; // TODO
-
-const config = {
-    headers: { Authorization: `Bearer ${THE_MOVIE_API_TOKEN}` } // TODO
-}
 export const getImdbId = async (movieLink: string): Promise<string> => {
     try {
 
@@ -28,7 +21,7 @@ export const getTrailersByImdbId = async (code: string): Promise<Trailer[]> => {
     try {
         const apiRequest = `${THE_MOVIE_API_URL}movie/${code}/videos`;
 
-        const response = await axios.get(apiRequest, config);
+        const response = await axios.get(apiRequest, BearerAuthorization);
 
         const results = response.data.results;
 
@@ -43,13 +36,14 @@ export const getTrailersByImdbId = async (code: string): Promise<Trailer[]> => {
 
 export const getTrailersLinks = (trailers: Trailer[]): string[] => {
     const response = trailers.map((trailer: Trailer) => {
-        return LinkProvider[trailer.site as 'YouTube' | 'Vimeo'] + trailer.key; // TODO
+        return LinkProvider[trailer.site] + trailer.key;
     });
+    if(!response.length)
+        throw new NotFound('Was not able to get trailers from this movie. Try another one.');
     return response;
 }
 
 export const getTrailers = async (movieLink: string): Promise<string[]> => {
-
 
     const imdbID = await getImdbId(movieLink);
     const trailers = await getTrailersByImdbId(imdbID);

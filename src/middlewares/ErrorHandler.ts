@@ -17,7 +17,7 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     return res.status(response.code).json(response);
 }
 
-export const notFound = (err: Error, req: Request, res: Response, next: NextFunction): Response => {
+export const notFound = (req: Request, res: Response, next: NextFunction): Response => {
     const notFoundObject = new NotFound('Route not found');
 
     const response: ResponseEntity = {
