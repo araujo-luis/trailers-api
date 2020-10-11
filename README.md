@@ -19,9 +19,9 @@ http://localhost:<PORT>/trailer/?movieLink=<MovieLink>
 ```
 
 For example
-
+```
 http://localhost:6000/trailer/?movieLink=https://content.viaplay.se/pc-se/film/once-upon-a-time...-in-hollywood-2019
-
+```
 Response
 ```json
 {
