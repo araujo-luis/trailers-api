@@ -1,0 +1,19 @@
+{
+  "name": "trailers-api",
+  "version": "1.0.0",
+  "description": "Trailers API From Viaplay",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/l222p/trailers-api.git"
+  },
+  "author": "Luis Araujo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/l222p/trailers-api/issues"
+  },
+  "homepage": "https://github.com/l222p/trailers-api#readme"
+}
