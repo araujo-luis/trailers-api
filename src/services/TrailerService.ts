@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Trailer } from '@App/models/Trailer';
 import axios from 'axios';
 import { LinkProvider } from '../utils/constants';
+import { NotFound } from '../utils/ErrorHandler';
 
 dotenv.config()
 const { THE_MOVIE_API_TOKEN, THE_MOVIE_API_URL } = process.env; // TODO
@@ -19,7 +20,7 @@ export const getImdbId = async (movieLink: string): Promise<string> => {
         return imdbId;
 
     } catch (error) {
-        return error;
+        throw new NotFound(`An error ocurrent while fetching IMDB Id. Services response: ${error.message}`);
     }
 }
 
@@ -36,7 +37,7 @@ export const getTrailersByImdbId = async (code: string): Promise<Trailer[]> => {
         return trailers;
 
     } catch (error) {
-        return error;
+        throw new NotFound(`An error ocurrent while fetching trailers by IMDB Id. Services response: ${error.message}`);
     }
 }
 
@@ -48,15 +49,13 @@ export const getTrailersLinks = (trailers: Trailer[]): string[] => {
 }
 
 export const getTrailers = async (movieLink: string): Promise<string[]> => {
-    try {
 
-        const imdbID = await getImdbId(movieLink);
-        const trailers = await getTrailersByImdbId(imdbID);
 
-        const links = getTrailersLinks(trailers);
-        return links;
+    const imdbID = await getImdbId(movieLink);
+    const trailers = await getTrailersByImdbId(imdbID);
 
-    } catch (error) {
-        return error;
-    }
+    const links = getTrailersLinks(trailers);
+    return links;
+
+
 }

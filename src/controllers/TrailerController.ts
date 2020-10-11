@@ -1,16 +1,29 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { ResponseEntity } from '../models/ResponseEntity';
 import { getTrailers } from '../services/TrailerService';
+import { BadRequest, MethodNotAllowed } from '../utils/ErrorHandler';
 
-export const findTrailer = async (req: Request, res: Response): Promise<void> => {
+export const findTrailer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { movieLink } = req.query;
     try {
-        if (movieLink) {
-            const trailers = await getTrailers(movieLink.toString());
-            res.status(200).json(trailers)
-        }
+        const response: ResponseEntity = {};
+
+        if (!movieLink)
+            throw new BadRequest('movieLink query param is required');
+
+
+        const trailers = await getTrailers(movieLink.toString());
+        response.code = 200;
+        response.message = 'Success';
+        response.data = trailers;
+        res.status(response.code).json(response)
 
     } catch (error) {
-        res.status(500).json("Error" + error)
+        next(error);
     }
 
+}
+
+export const methodNotAllowed = (req: Request, res: Response, next: NextFunction): void => {
+    next(new MethodNotAllowed('Method not Allowed'));
 }
