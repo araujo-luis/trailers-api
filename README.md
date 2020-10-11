@@ -14,7 +14,9 @@ You need to create a `.env` file at project level with the enviroment variables 
 
 Then you will be able to request for movie trailers following this endpoint:
 
+```
 http://localhost:<PORT>/trailer/?movieLink=<MovieLink>
+```
 
 For example
 
